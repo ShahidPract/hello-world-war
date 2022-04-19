@@ -4,7 +4,7 @@
 </head>
 <body>
 	<h1>Hello New Script Repeat!</h1>
-	<h1>New!</h1>
+	<h1>Check Plugin!</h1>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
