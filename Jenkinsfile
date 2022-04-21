@@ -1,5 +1,5 @@
 pipeline {
-agent {label 'slavejava'}
+agent {label 'tomcat'}
 stages{
 stage('checkout'){
 steps{
