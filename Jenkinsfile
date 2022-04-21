@@ -1,5 +1,5 @@
 pipeline{
-	agent { label 'group2' }
+	agent { label 'tomcat' }
    stages{
      stage('checkout'){
        steps{
