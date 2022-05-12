@@ -17,7 +17,7 @@ pipeline {
    stage('login') {
         steps {
 	  sh 'docker login -u sanadishahid -p Shah@7091'
-	  sh 'docker tag myimage:latest multistage1:1.0'
+	  sh 'docker tag myimage:latest sanadishahid/multistage1:1.0'
 	  sh 'docker push sanadishahid/multistage1:1.0'
     }
    }
