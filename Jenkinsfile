@@ -17,17 +17,20 @@ pipeline {
    
    stage('login') {
      steps {
-       sh 'docker login -u sanadishahid -p Shah@7091'
-       sh 'docker tag myimage:latest sanadishahid/multistage1:1.0'
-       sh 'docker push sanadishahid/multistage1:1.0'
-       }
+            sh 'docker login -u sanadishahid -p Shah@7091'
+            sh 'docker tag myimage:latest sanadishahid/multistage1:1.0'
+            sh 'docker push sanadishahid/multistage1:1.0'
+      }
    }
+	    
    stage('deploy') {
 	   agent { label 'tomcat' }
      steps {
-       sh 'docker login -u sanadishahid -p Shah@7091'
-       sh 'docker pull sanadishahid/multistage1:1.0'
-       }
+       	    sh 'docker login -u sanadishahid -p Shah@7091'
+            sh 'docker pull sanadishahid/multistage1:1.0'
+            sh 'docker rm -f test1'
+	    sh 'docker run -d -p 8054:8080 --name test1 sanadishahidmultistage1:1.0'
+     }
    }
    }
 }
