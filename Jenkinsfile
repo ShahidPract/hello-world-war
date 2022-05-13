@@ -29,7 +29,7 @@ pipeline {
        	    sh 'docker login -u sanadishahid -p Shah@7091'
             sh 'docker pull sanadishahid/multistage1:1.0'
             sh 'docker rm -f test1'
-	    sh 'docker run -d -p 8054:8080 --name test1 sanadishahidmultistage1:1.0'
+	    sh 'docker run -d -p 8054:8080 --name test1 sanadishahid/multistage1:1.0'
      }
    }
    }
