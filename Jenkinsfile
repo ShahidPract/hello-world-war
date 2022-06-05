@@ -1,36 +1,38 @@
 pipeline {
-  agent { label 'master' }
-    stages {
-    stage('checkout') {
+  agent {label 'newslave'}
+  stages {
+    stage ('checkout') {
       steps {
-        sh 'sudo rm -rf hello-world-war'       
-        sh 'git clone https://github.com/ShahidPract/hello-world-war.git'
-        }
-    }
-   
-    stage('build') {
-      steps {
-	sh 'sudo chmod 777 /var/run/docker.sock'	
-	sh 'docker build -t myimage:latest .'
-        }
-    }
-   
-   stage('login') {
-     steps {
-            sh 'docker login -u sanadishahid -p Shah@7091'
-            sh 'docker tag myimage:latest sanadishahid/multistage1:1.0'
-            sh 'docker push sanadishahid/multistage1:1.0'
+              sh 'whoami'
+              sh 'rm -rf hello-world-war'
+              sh 'git clone https://github.com/venuumarji/hello-world-war.git'
+              sh 'pwd'
+              sh 'ls'
       }
-   }
-	    
-   stage('deploy') {
-	   agent { label 'tomcat' }
-     steps {
-       	    sh 'docker login -u sanadishahid -p Shah@7091'
-            sh 'docker pull sanadishahid/multistage1:1.0'
-            sh 'docker rm -f test1'
-	    sh 'docker run -d -p 8054:8080 --name test1 sanadishahid/multistage1:1.0'
-     }
-   }
-   }
+    }
+    stage ('build') {
+      steps {
+              sh 'docker build -t 377663637476.dkr.ecr.us-east-1.amazonaws.com/mytomcat:${BUILD_NUMBER} .'
+      }
+    }
+    stage ('publish') {
+      steps {               
+              sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 377663637476.dkr.ecr.us-east-1.amazonaws.com'
+              sh 'docker push 377663637476.dkr.ecr.us-east-1.amazonaws.com/mytomcat:${BUILD_NUMBER}'
+              sh 'pwd'
+              sh 'ls'
+              sh "helm package --version ${BUILD_NUMBER} helm/mytomcat/ "
+              sh "curl -uvenu.umarji@gmail.com:Jfrog@123 -T mytomcat-${BUILD_NUMBER}.tgz \"https://venu.jfrog.io/artifactory/mytomcat-helm/mytomcat-${BUILD_NUMBER}.tgz\""
+      }
+    }
+      
+    stage ('deploy') {
+      agent {label 'eksslave'}
+      steps {
+              sh "helm repo add mytomcat-helm https://venu.jfrog.io/artifactory/api/helm/mytomcat-helm --username venu.umarji@gmail.com --password Jfrog@123"
+              sh "helm repo update"
+              sh "helm upgrade --install tomcat mytomcat-helm/mytomcat --set image_tag=${BUILD_NUMBER} --version ${BUILD_NUMBER}"
+      }
+    }
+  }         
 }
