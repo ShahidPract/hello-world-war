@@ -1,11 +1,11 @@
 pipeline {
-  agent {label 'newslave'}
+  agent {label 'jenslave'}
   stages {
     stage ('checkout') {
       steps {
               sh 'whoami'
               sh 'rm -rf hello-world-war'
-              sh 'git clone https://github.com/venuumarji/hello-world-war.git'
+              sh 'git clone https://github.com/ShahidPract/hello-world-war.git'
               sh 'pwd'
               sh 'ls'
       }
