@@ -1,0 +1,8 @@
+deploy_name: tomcat
+replicas: 4
+label_name: tomcat
+maxsurge: 2
+maxunavailabele: 0
+container_name: tomcat
+image_name: tomcat
+image_tag: 9.0.62
