@@ -12,13 +12,13 @@ pipeline {
     }
     stage ('build') {
       steps {
-              sh 'docker build -t 377663637476.dkr.ecr.us-east-1.amazonaws.com/mytomcat:${BUILD_NUMBER} .'
+              sh 'docker build -t 963946019663.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER} .'
       }
     }
     stage ('publish') {
       steps {               
               sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 377663637476.dkr.ecr.us-east-1.amazonaws.com'
-              sh 'docker push 377663637476.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER}'
+              sh 'docker push 963946019663.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER}'
               sh 'pwd'
               sh 'ls'
               sh "helm package --version ${BUILD_NUMBER} helm/tomcat/ "
