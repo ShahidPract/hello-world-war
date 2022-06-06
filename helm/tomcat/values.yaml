@@ -5,4 +5,4 @@ maxsurge: 2
 maxunavailabele: 0
 container_name: tomcat
 image_name: tomcat
-image_tag: 9.0.62
+image_tag: 
