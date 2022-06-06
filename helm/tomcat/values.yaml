@@ -4,5 +4,5 @@ label_name: tomcat
 maxsurge: 2
 maxunavailabele: 0
 container_name: tomcat
-image_name: tomcat
+image_name: 963946019663.dkr.ecr.us-east-1.amazonaws.com/tomcat
 image_tag: 
